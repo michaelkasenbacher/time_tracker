@@ -12,42 +12,41 @@
         }
 
         body {
-            font-family: Georgia, 'Times New Roman', serif;
-            background: #f9f7f3;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f4ef;
+            color: #3d3929;
             line-height: 1.6;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 48px 24px;
         }
 
         .container {
-            max-width: 640px;
+            max-width: 680px;
             margin: 0 auto;
         }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: normal;
-            color: #222;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2d2a20;
             text-align: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             letter-spacing: -0.02em;
         }
 
         h2 {
-            font-size: 1.75rem;
-            font-weight: normal;
-            color: #222;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d2a20;
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
         }
 
         .tagline {
             text-align: center;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+            color: #7a7768;
+            margin-bottom: 40px;
+            font-size: 1.05rem;
         }
 
         /* Setup Phase */
@@ -61,67 +60,76 @@
             display: flex;
             gap: 12px;
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 2rem;
+            max-width: 420px;
+            margin-bottom: 28px;
         }
 
         .input-group input {
             flex: 1;
-            padding: 12px 16px;
-            border: 1px solid #ccc;
-            background: #fff;
-            color: #333;
-            font-family: Georgia, serif;
+            padding: 14px 18px;
+            border: 1px solid #e0ded6;
+            border-radius: 12px;
+            background: #fffffe;
+            color: #3d3929;
+            font-family: inherit;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
         .input-group input:focus {
-            border-color: #900;
+            border-color: #d97757;
+            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.12);
         }
 
         .input-group input::placeholder {
-            color: #999;
-            font-style: italic;
+            color: #a8a598;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 14px 24px;
             border: none;
-            font-family: Georgia, serif;
+            border-radius: 12px;
+            font-family: inherit;
             font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
-            background: #900;
+            background: #d97757;
             color: #fff;
+            box-shadow: 0 1px 3px rgba(217, 119, 87, 0.3);
         }
 
         .btn-primary:hover {
-            background: #700;
+            background: #c9654a;
+            box-shadow: 0 2px 6px rgba(217, 119, 87, 0.35);
         }
 
         .btn-secondary {
-            background: #fff;
-            color: #333;
-            border: 1px solid #ccc;
+            background: #fffffe;
+            color: #3d3929;
+            border: 1px solid #e0ded6;
         }
 
         .btn-secondary:hover {
-            background: #f5f5f5;
-            border-color: #999;
+            background: #f9f8f4;
+            border-color: #d4d2c8;
         }
 
         .btn-end {
-            background: #666;
-            color: #fff;
+            background: #fffffe;
+            color: #6b6858;
+            border: 1px solid #e0ded6;
         }
 
         .btn-end:hover {
-            background: #444;
+            background: #f9f8f4;
+            border-color: #d4d2c8;
+            color: #3d3929;
         }
 
         .participants-preview {
@@ -129,35 +137,31 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 28px;
         }
 
         .participant-tag {
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 8px 14px;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            padding: 10px 16px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             font-size: 0.95rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
         }
 
         .participant-tag .remove {
             cursor: pointer;
-            color: #999;
-            font-size: 1.2rem;
+            color: #a8a598;
+            font-size: 1.1rem;
             line-height: 1;
+            transition: color 0.2s;
         }
 
         .participant-tag .remove:hover {
-            color: #900;
-        }
-
-        .instructions {
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 1.5rem;
+            color: #d97757;
         }
 
         /* Tracking Phase */
@@ -169,75 +173,81 @@
 
         .current-speaker {
             text-align: center;
-            padding: 2rem;
-            background: #fff;
-            border: 1px solid #ddd;
+            padding: 32px 40px;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            border-radius: 20px;
             width: 100%;
-            margin-bottom: 2.5rem;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .current-speaker .label {
-            font-size: 0.9rem;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 0.5rem;
-            text-transform: lowercase;
+            font-size: 0.85rem;
+            color: #7a7768;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
         }
 
         .current-speaker .name {
-            font-size: 2rem;
-            color: #222;
-            margin-bottom: 0.5rem;
-            min-height: 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #2d2a20;
+            margin-bottom: 4px;
+            min-height: 2.25rem;
         }
 
         .current-speaker .timer {
             font-size: 3rem;
-            font-weight: normal;
-            color: #900;
+            font-weight: 600;
+            color: #d97757;
             font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
         }
 
         .circle-container {
             position: relative;
             width: 100%;
-            max-width: 480px;
+            max-width: 460px;
             aspect-ratio: 1;
-            margin: 0 auto 2rem;
+            margin: 0 auto 32px;
         }
 
         .participant-btn {
             position: absolute;
-            width: 90px;
-            height: 90px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            border: 2px solid #ccc;
-            background: #fff;
-            color: #333;
-            font-family: Georgia, serif;
-            font-size: 0.9rem;
+            border: 2px solid #e0ded6;
+            background: #fffffe;
+            color: #3d3929;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 8px;
+            padding: 10px;
             white-space: nowrap;
             overflow: hidden;
             transform: translate(-50%, -50%);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
         .participant-btn:hover {
-            border-color: #900;
-            color: #900;
+            border-color: #d97757;
+            box-shadow: 0 4px 12px rgba(217, 119, 87, 0.15);
         }
 
         .participant-btn.active {
-            border-color: #900;
-            background: #900;
+            border-color: #d97757;
+            background: #d97757;
             color: #fff;
-            box-shadow: 0 0 0 4px rgba(153, 0, 0, 0.15);
+            box-shadow: 0 4px 16px rgba(217, 119, 87, 0.35);
         }
 
         .silence-btn {
@@ -245,29 +255,30 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
+            width: 96px;
+            height: 96px;
             border-radius: 50%;
-            border: 2px solid #999;
-            background: #f5f5f5;
-            color: #666;
-            font-family: Georgia, serif;
-            font-size: 1rem;
-            font-style: italic;
+            border: 2px solid #d4d2c8;
+            background: #f0efe9;
+            color: #7a7768;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .silence-btn:hover {
-            border-color: #666;
-            color: #333;
+            border-color: #b8b6ab;
+            background: #e8e7e0;
+            color: #5a5848;
         }
 
         .silence-btn.active {
-            border-color: #666;
-            background: #666;
+            border-color: #9a9889;
+            background: #9a9889;
             color: #fff;
-            box-shadow: 0 0 0 4px rgba(102, 102, 102, 0.15);
+            box-shadow: 0 4px 12px rgba(154, 152, 137, 0.3);
         }
 
         /* Results Phase */
@@ -279,9 +290,12 @@
 
         .results-summary {
             width: 100%;
-            background: #fff;
-            border: 1px solid #ddd;
-            margin-bottom: 2rem;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .results-summary table {
@@ -291,101 +305,103 @@
 
         .results-summary th,
         .results-summary td {
-            padding: 14px 20px;
+            padding: 16px 20px;
             text-align: left;
-            border-bottom: 1px solid #eee;
         }
 
         .results-summary th {
-            font-weight: normal;
-            font-style: italic;
-            color: #666;
-            font-size: 0.9rem;
-            border-bottom: 2px solid #ddd;
+            font-weight: 500;
+            color: #7a7768;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: #faf9f5;
+            border-bottom: 1px solid #e0ded6;
         }
 
-        .results-summary tr:last-child td {
-            border-bottom: none;
+        .results-summary tr:not(:last-child) td {
+            border-bottom: 1px solid #f0efe9;
         }
 
         .results-summary .time {
             font-variant-numeric: tabular-nums;
-            color: #900;
+            color: #d97757;
+            font-weight: 500;
         }
 
         .results-summary .turns {
-            color: #666;
+            color: #7a7768;
         }
 
         .silence-row {
-            background: #fafafa;
-            font-style: italic;
+            background: #faf9f5;
         }
 
         .total-row {
-            background: #f5f5f5;
-            border-top: 2px solid #ddd !important;
+            background: #f5f4ef;
         }
 
         .total-row td {
-            font-weight: bold;
+            font-weight: 600;
+            color: #2d2a20;
         }
 
         .bar-container {
             width: 100%;
-            margin-bottom: 2.5rem;
+            margin-bottom: 28px;
         }
 
         .bar-item {
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
 
         .bar-item .bar-label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-size: 0.95rem;
         }
 
         .bar-item .bar-label .name {
-            color: #333;
+            color: #3d3929;
+            font-weight: 500;
         }
 
         .bar-item .bar-label .stats {
-            color: #666;
+            color: #7a7768;
             font-variant-numeric: tabular-nums;
         }
 
         .bar-item .bar {
-            height: 24px;
-            background: #eee;
+            height: 12px;
+            background: #e8e7e0;
+            border-radius: 6px;
+            overflow: hidden;
         }
 
         .bar-item .bar-fill {
             height: 100%;
-            background: #900;
+            background: #d97757;
+            border-radius: 6px;
             transition: width 0.5s ease;
         }
 
         .bar-item .bar-fill.silence {
-            background: #999;
-        }
-
-        .divider {
-            width: 60px;
-            height: 1px;
-            background: #ccc;
-            margin: 2rem auto;
+            background: #a8a598;
         }
 
         /* Responsive */
         @media (max-width: 600px) {
             body {
-                padding: 30px 15px;
+                padding: 32px 16px;
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
+            }
+
+            .current-speaker {
+                padding: 24px;
             }
 
             .current-speaker .name {
@@ -393,19 +409,19 @@
             }
 
             .current-speaker .timer {
-                font-size: 2.25rem;
+                font-size: 2.5rem;
             }
 
             .participant-btn {
-                width: 70px;
-                height: 70px;
+                width: 72px;
+                height: 72px;
                 font-size: 0.8rem;
             }
 
             .silence-btn {
                 width: 80px;
                 height: 80px;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             .circle-container {
@@ -426,35 +442,35 @@
 </head>
 <body>
     <div class="container">
-        <h1>Speaking Time</h1>
-        <p class="tagline">Track who speaks and for how long</p>
+        <h1>Speaking Time Tracker</h1>
+        <p class="tagline">Track speaking time for everyone in your conversation</p>
 
         <!-- Setup Phase -->
         <div class="setup-phase" id="setupPhase">
             <div class="input-group">
-                <input type="text" id="nameInput" placeholder="Add a participant..." maxlength="20">
+                <input type="text" id="nameInput" placeholder="Enter participant name" maxlength="20">
                 <button class="btn btn-primary" id="addNameBtn">Add</button>
             </div>
             <div class="participants-preview" id="participantsPreview"></div>
-            <button class="btn btn-primary hidden" id="startSessionBtn">Begin Session</button>
+            <button class="btn btn-primary hidden" id="startSessionBtn">Start Session</button>
         </div>
 
         <!-- Tracking Phase -->
         <div class="tracking-phase" id="trackingPhase">
             <div class="current-speaker">
-                <div class="label">currently speaking</div>
-                <div class="name" id="currentSpeakerName">Select a name to begin</div>
+                <div class="label">Currently Speaking</div>
+                <div class="name" id="currentSpeakerName">Select a participant</div>
                 <div class="timer" id="currentTimer">00:00</div>
             </div>
             <div class="circle-container" id="circleContainer">
-                <button class="silence-btn" id="silenceBtn">silence</button>
+                <button class="silence-btn" id="silenceBtn">Silence</button>
             </div>
             <button class="btn btn-end" id="endBtn">End Session</button>
         </div>
 
         <!-- Results Phase -->
         <div class="results-phase" id="resultsPhase">
-            <h2>Results</h2>
+            <h2>Session Results</h2>
             <div class="bar-container" id="barContainer"></div>
             <div class="results-summary">
                 <table>
@@ -468,7 +484,6 @@
                     <tbody id="resultsBody"></tbody>
                 </table>
             </div>
-            <div class="divider"></div>
             <button class="btn btn-primary" id="newSessionBtn">New Session</button>
         </div>
     </div>
@@ -588,7 +603,7 @@
                 btn.style.left = `${x}%`;
                 btn.style.top = `${y}%`;
                 btn.dataset.name = name;
-                const fontSize = getFontSize(name, 14, 74);
+                const fontSize = getFontSize(name, 14, 68);
                 btn.style.fontSize = `${fontSize}px`;
                 btn.onclick = () => selectSpeaker(name, btn);
                 circleContainer.appendChild(btn);
@@ -681,7 +696,7 @@
             silenceBar.className = 'bar-item';
             silenceBar.innerHTML = `
                 <div class="bar-label">
-                    <span class="name" style="font-style: italic;">Silence</span>
+                    <span class="name">Silence</span>
                     <span class="stats">${formatTimeDetailed(speakingData.silence.time)} (${silencePercentage.toFixed(1)}%)</span>
                 </div>
                 <div class="bar">
@@ -731,7 +746,7 @@
 
             if (timerInterval) clearInterval(timerInterval);
 
-            currentSpeakerName.textContent = 'Select a name to begin';
+            currentSpeakerName.textContent = 'Select a participant';
             currentTimer.textContent = '00:00';
 
             resultsPhase.style.display = 'none';
