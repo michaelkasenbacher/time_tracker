@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking Time Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f9f7f3;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: normal;
+            color: #222;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: normal;
+            color: #222;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Setup Phase */
+        .setup-phase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #333;
+            font-family: Georgia, serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #900;
+        }
+
+        .input-group input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            font-family: Georgia, serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #900;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #700;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+
+        .btn-end {
+            background: #666;
+            color: #fff;
+        }
+
+        .btn-end:hover {
+            background: #444;
+        }
+
+        .participants-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .participant-tag {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .participant-tag .remove {
+            cursor: pointer;
+            color: #999;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .participant-tag .remove:hover {
+            color: #900;
+        }
+
+        .instructions {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Tracking Phase */
+        .tracking-phase {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .current-speaker {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin-bottom: 2.5rem;
+        }
+
+        .current-speaker .label {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            text-transform: lowercase;
+        }
+
+        .current-speaker .name {
+            font-size: 2rem;
+            color: #222;
+            margin-bottom: 0.5rem;
+            min-height: 2.5rem;
+        }
+
+        .current-speaker .timer {
+            font-size: 3rem;
+            font-weight: normal;
+            color: #900;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .circle-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 1;
+            margin: 0 auto 2rem;
+        }
+
+        .participant-btn {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            background: #fff;
+            color: #333;
+            font-family: Georgia, serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8px;
+            word-break: break-word;
+            transform: translate(-50%, -50%);
+        }
+
+        .participant-btn:hover {
+            border-color: #900;
+            color: #900;
+        }
+
+        .participant-btn.active {
+            border-color: #900;
+            background: #900;
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(153, 0, 0, 0.15);
+        }
+
+        .silence-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #999;
+            background: #f5f5f5;
+            color: #666;
+            font-family: Georgia, serif;
+            font-size: 1rem;
+            font-style: italic;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .silence-btn:hover {
+            border-color: #666;
+            color: #333;
+        }
+
+        .silence-btn.active {
+            border-color: #666;
+            background: #666;
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(102, 102, 102, 0.15);
+        }
+
+        /* Results Phase */
+        .results-phase {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .results-summary {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 2rem;
+        }
+
+        .results-summary table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results-summary th,
+        .results-summary td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-summary th {
+            font-weight: normal;
+            font-style: italic;
+            color: #666;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .results-summary tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-summary .time {
+            font-variant-numeric: tabular-nums;
+            color: #900;
+        }
+
+        .results-summary .turns {
+            color: #666;
+        }
+
+        .silence-row {
+            background: #fafafa;
+            font-style: italic;
+        }
+
+        .total-row {
+            background: #f5f5f5;
+            border-top: 2px solid #ddd !important;
+        }
+
+        .total-row td {
+            font-weight: bold;
+        }
+
+        .bar-container {
+            width: 100%;
+            margin-bottom: 2.5rem;
+        }
+
+        .bar-item {
+            margin-bottom: 1rem;
+        }
+
+        .bar-item .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .bar-item .bar-label .name {
+            color: #333;
+        }
+
+        .bar-item .bar-label .stats {
+            color: #666;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .bar-item .bar {
+            height: 24px;
+            background: #eee;
+        }
+
+        .bar-item .bar-fill {
+            height: 100%;
+            background: #900;
+            transition: width 0.5s ease;
+        }
+
+        .bar-item .bar-fill.silence {
+            background: #999;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: #ccc;
+            margin: 2rem auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body {
+                padding: 30px 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .current-speaker .name {
+                font-size: 1.5rem;
+            }
+
+            .current-speaker .timer {
+                font-size: 2.25rem;
+            }
+
+            .participant-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 0.8rem;
+            }
+
+            .silence-btn {
+                width: 80px;
+                height: 80px;
+                font-size: 0.9rem;
+            }
+
+            .circle-container {
+                max-width: 340px;
+            }
+
+            .results-summary th,
+            .results-summary td {
+                padding: 12px 14px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Speaking Time</h1>
+        <p class="tagline">Track who speaks and for how long</p>
+
+        <!-- Setup Phase -->
+        <div class="setup-phase" id="setupPhase">
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="Add a participant..." maxlength="20">
+                <button class="btn btn-primary" id="addNameBtn">Add</button>
+            </div>
+            <div class="participants-preview" id="participantsPreview"></div>
+            <button class="btn btn-primary hidden" id="startSessionBtn">Begin Session</button>
+        </div>
+
+        <!-- Tracking Phase -->
+        <div class="tracking-phase" id="trackingPhase">
+            <div class="current-speaker">
+                <div class="label">currently speaking</div>
+                <div class="name" id="currentSpeakerName">Select a name to begin</div>
+                <div class="timer" id="currentTimer">00:00</div>
+            </div>
+            <div class="circle-container" id="circleContainer">
+                <button class="silence-btn" id="silenceBtn">silence</button>
+            </div>
+            <button class="btn btn-end" id="endBtn">End Session</button>
+        </div>
+
+        <!-- Results Phase -->
+        <div class="results-phase" id="resultsPhase">
+            <h2>Results</h2>
+            <div class="bar-container" id="barContainer"></div>
+            <div class="results-summary">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Participant</th>
+                            <th>Time</th>
+                            <th>Turns</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody"></tbody>
+                </table>
+            </div>
+            <div class="divider"></div>
+            <button class="btn btn-primary" id="newSessionBtn">New Session</button>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let participants = [];
+        let currentSpeaker = null;
+        let speakerStartTime = null;
+        let timerInterval = null;
+        let speakingData = {};
+
+        // DOM Elements
+        const setupPhase = document.getElementById('setupPhase');
+        const trackingPhase = document.getElementById('trackingPhase');
+        const resultsPhase = document.getElementById('resultsPhase');
+        const nameInput = document.getElementById('nameInput');
+        const addNameBtn = document.getElementById('addNameBtn');
+        const participantsPreview = document.getElementById('participantsPreview');
+        const startSessionBtn = document.getElementById('startSessionBtn');
+        const circleContainer = document.getElementById('circleContainer');
+        const silenceBtn = document.getElementById('silenceBtn');
+        const currentSpeakerName = document.getElementById('currentSpeakerName');
+        const currentTimer = document.getElementById('currentTimer');
+        const endBtn = document.getElementById('endBtn');
+        const resultsBody = document.getElementById('resultsBody');
+        const barContainer = document.getElementById('barContainer');
+        const newSessionBtn = document.getElementById('newSessionBtn');
+
+        // Utility functions
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function formatTimeDetailed(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            if (minutes > 0) {
+                return `${minutes}m ${seconds}s`;
+            }
+            return `${seconds}s`;
+        }
+
+        // Setup Phase Functions
+        function addParticipant() {
+            const name = nameInput.value.trim();
+            if (name && !participants.includes(name)) {
+                participants.push(name);
+                renderParticipantsPreview();
+                nameInput.value = '';
+                nameInput.focus();
+            }
+        }
+
+        function removeParticipant(name) {
+            participants = participants.filter(p => p !== name);
+            renderParticipantsPreview();
+        }
+
+        function renderParticipantsPreview() {
+            participantsPreview.innerHTML = participants.map(name => `
+                <div class="participant-tag">
+                    <span>${name}</span>
+                    <span class="remove" onclick="removeParticipant('${name}')">&times;</span>
+                </div>
+            `).join('');
+
+            if (participants.length >= 2) {
+                startSessionBtn.classList.remove('hidden');
+            } else {
+                startSessionBtn.classList.add('hidden');
+            }
+        }
+
+        // Tracking Phase Functions
+        function startSession() {
+            speakingData = {
+                silence: { time: 0, turns: 0 }
+            };
+            participants.forEach(name => {
+                speakingData[name] = { time: 0, turns: 0 };
+            });
+
+            setupPhase.style.display = 'none';
+            trackingPhase.style.display = 'flex';
+            renderCircle();
+        }
+
+        function renderCircle() {
+            const existingBtns = circleContainer.querySelectorAll('.participant-btn');
+            existingBtns.forEach(btn => btn.remove());
+
+            const centerX = 50;
+            const centerY = 50;
+            const radius = 38;
+
+            participants.forEach((name, index) => {
+                const angle = (index / participants.length) * 2 * Math.PI - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                const btn = document.createElement('button');
+                btn.className = 'participant-btn';
+                btn.textContent = name;
+                btn.style.left = `${x}%`;
+                btn.style.top = `${y}%`;
+                btn.dataset.name = name;
+                btn.onclick = () => selectSpeaker(name, btn);
+                circleContainer.appendChild(btn);
+            });
+        }
+
+        function selectSpeaker(name, btnElement) {
+            if (currentSpeaker !== null && speakerStartTime !== null) {
+                const elapsed = Date.now() - speakerStartTime;
+                speakingData[currentSpeaker].time += elapsed;
+            }
+
+            if (name !== currentSpeaker) {
+                speakingData[name].turns++;
+            }
+
+            document.querySelectorAll('.participant-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            silenceBtn.classList.remove('active');
+
+            currentSpeaker = name;
+            speakerStartTime = Date.now();
+
+            if (name === 'silence') {
+                silenceBtn.classList.add('active');
+                currentSpeakerName.textContent = 'Silence';
+            } else {
+                btnElement.classList.add('active');
+                currentSpeakerName.textContent = name;
+            }
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimerDisplay, 100);
+        }
+
+        function selectSilence() {
+            selectSpeaker('silence', null);
+        }
+
+        function updateTimerDisplay() {
+            if (speakerStartTime !== null) {
+                const elapsed = Date.now() - speakerStartTime;
+                currentTimer.textContent = formatTime(elapsed);
+            }
+        }
+
+        function endSession() {
+            if (currentSpeaker !== null && speakerStartTime !== null) {
+                const elapsed = Date.now() - speakerStartTime;
+                speakingData[currentSpeaker].time += elapsed;
+            }
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            trackingPhase.style.display = 'none';
+            resultsPhase.style.display = 'flex';
+            renderResults();
+        }
+
+        // Results Phase Functions
+        function renderResults() {
+            let totalTime = speakingData.silence.time;
+            participants.forEach(name => {
+                totalTime += speakingData[name].time;
+            });
+
+            barContainer.innerHTML = '';
+
+            participants.forEach((name) => {
+                const data = speakingData[name];
+                const percentage = totalTime > 0 ? (data.time / totalTime) * 100 : 0;
+
+                const barItem = document.createElement('div');
+                barItem.className = 'bar-item';
+                barItem.innerHTML = `
+                    <div class="bar-label">
+                        <span class="name">${name}</span>
+                        <span class="stats">${formatTimeDetailed(data.time)} (${percentage.toFixed(1)}%)</span>
+                    </div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: ${percentage}%;"></div>
+                    </div>
+                `;
+                barContainer.appendChild(barItem);
+            });
+
+            const silencePercentage = totalTime > 0 ? (speakingData.silence.time / totalTime) * 100 : 0;
+            const silenceBar = document.createElement('div');
+            silenceBar.className = 'bar-item';
+            silenceBar.innerHTML = `
+                <div class="bar-label">
+                    <span class="name" style="font-style: italic;">Silence</span>
+                    <span class="stats">${formatTimeDetailed(speakingData.silence.time)} (${silencePercentage.toFixed(1)}%)</span>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill silence" style="width: ${silencePercentage}%;"></div>
+                </div>
+            `;
+            barContainer.appendChild(silenceBar);
+
+            resultsBody.innerHTML = '';
+
+            participants.forEach(name => {
+                const data = speakingData[name];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${name}</td>
+                    <td class="time">${formatTimeDetailed(data.time)}</td>
+                    <td class="turns">${data.turns}</td>
+                `;
+                resultsBody.appendChild(row);
+            });
+
+            const silenceRow = document.createElement('tr');
+            silenceRow.className = 'silence-row';
+            silenceRow.innerHTML = `
+                <td>Silence</td>
+                <td class="time">${formatTimeDetailed(speakingData.silence.time)}</td>
+                <td class="turns">${speakingData.silence.turns}</td>
+            `;
+            resultsBody.appendChild(silenceRow);
+
+            const totalTurns = Object.values(speakingData).reduce((sum, d) => sum + d.turns, 0);
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td>Total</td>
+                <td class="time">${formatTimeDetailed(totalTime)}</td>
+                <td class="turns">${totalTurns}</td>
+            `;
+            resultsBody.appendChild(totalRow);
+        }
+
+        function startNewSession() {
+            participants = [];
+            currentSpeaker = null;
+            speakerStartTime = null;
+            speakingData = {};
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            currentSpeakerName.textContent = 'Select a name to begin';
+            currentTimer.textContent = '00:00';
+
+            resultsPhase.style.display = 'none';
+            setupPhase.style.display = 'flex';
+            renderParticipantsPreview();
+        }
+
+        // Event Listeners
+        addNameBtn.addEventListener('click', addParticipant);
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addParticipant();
+        });
+        startSessionBtn.addEventListener('click', startSession);
+        silenceBtn.addEventListener('click', selectSilence);
+        endBtn.addEventListener('click', endSession);
+        newSessionBtn.addEventListener('click', startNewSession);
+
+        nameInput.focus();
+    </script>
+</body>
+</html>
