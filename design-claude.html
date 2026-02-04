@@ -390,6 +390,53 @@
             background: #a8a598;
         }
 
+        .tracking-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Stats Phase */
+        .stats-phase {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .stats-header h2 {
+            margin-bottom: 12px;
+        }
+
+        .stats-current {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 16px 24px;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .stats-speaker {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2d2a20;
+        }
+
+        .stats-timer {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #d97757;
+            font-variant-numeric: tabular-nums;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             body {
@@ -465,7 +512,35 @@
             <div class="circle-container" id="circleContainer">
                 <button class="silence-btn" id="silenceBtn">Silence</button>
             </div>
-            <button class="btn btn-end" id="endBtn">End Session</button>
+            <div class="tracking-buttons">
+                <button class="btn btn-secondary" id="statsBtn">Stats</button>
+                <button class="btn btn-end" id="endBtn">End Session</button>
+            </div>
+        </div>
+
+        <!-- Stats Phase (live view) -->
+        <div class="stats-phase" id="statsPhase">
+            <div class="stats-header">
+                <h2>Live Stats</h2>
+                <div class="stats-current">
+                    <span class="stats-speaker" id="statsSpeakerName">-</span>
+                    <span class="stats-timer" id="statsTimer">00:00</span>
+                </div>
+            </div>
+            <div class="bar-container" id="statsBarContainer"></div>
+            <div class="results-summary">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Participant</th>
+                            <th>Time</th>
+                            <th>Turns</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statsResultsBody"></tbody>
+                </table>
+            </div>
+            <button class="btn btn-primary" id="backBtn">Back to Tracking</button>
         </div>
 
         <!-- Results Phase -->
@@ -500,6 +575,7 @@
         const setupPhase = document.getElementById('setupPhase');
         const trackingPhase = document.getElementById('trackingPhase');
         const resultsPhase = document.getElementById('resultsPhase');
+        const statsPhase = document.getElementById('statsPhase');
         const nameInput = document.getElementById('nameInput');
         const addNameBtn = document.getElementById('addNameBtn');
         const participantsPreview = document.getElementById('participantsPreview');
@@ -509,8 +585,14 @@
         const currentSpeakerName = document.getElementById('currentSpeakerName');
         const currentTimer = document.getElementById('currentTimer');
         const endBtn = document.getElementById('endBtn');
+        const statsBtn = document.getElementById('statsBtn');
+        const backBtn = document.getElementById('backBtn');
         const resultsBody = document.getElementById('resultsBody');
         const barContainer = document.getElementById('barContainer');
+        const statsBarContainer = document.getElementById('statsBarContainer');
+        const statsResultsBody = document.getElementById('statsResultsBody');
+        const statsSpeakerName = document.getElementById('statsSpeakerName');
+        const statsTimer = document.getElementById('statsTimer');
         const newSessionBtn = document.getElementById('newSessionBtn');
 
         // Utility functions
@@ -648,6 +730,12 @@
             if (speakerStartTime !== null) {
                 const elapsed = Date.now() - speakerStartTime;
                 currentTimer.textContent = formatTime(elapsed);
+                statsTimer.textContent = formatTime(elapsed);
+
+                // Update live stats if stats phase is visible
+                if (statsPhase.style.display === 'flex') {
+                    renderLiveStats();
+                }
             }
         }
 
@@ -660,8 +748,117 @@
             if (timerInterval) clearInterval(timerInterval);
 
             trackingPhase.style.display = 'none';
+            statsPhase.style.display = 'none';
             resultsPhase.style.display = 'flex';
             renderResults();
+        }
+
+        // Stats Phase Functions
+        function showStats() {
+            trackingPhase.style.display = 'none';
+            statsPhase.style.display = 'flex';
+            statsSpeakerName.textContent = currentSpeaker === 'silence' ? 'Silence' : (currentSpeaker || '-');
+            renderLiveStats();
+        }
+
+        function hideStats() {
+            statsPhase.style.display = 'none';
+            trackingPhase.style.display = 'flex';
+        }
+
+        function renderLiveStats() {
+            // Calculate current elapsed time for active speaker
+            let activeElapsed = 0;
+            if (currentSpeaker !== null && speakerStartTime !== null) {
+                activeElapsed = Date.now() - speakerStartTime;
+            }
+
+            // Calculate totals including current elapsed
+            let totalTime = speakingData.silence.time;
+            participants.forEach(name => {
+                totalTime += speakingData[name].time;
+            });
+            if (currentSpeaker) {
+                totalTime += activeElapsed;
+            }
+
+            statsBarContainer.innerHTML = '';
+
+            participants.forEach((name) => {
+                const data = speakingData[name];
+                let time = data.time;
+                if (currentSpeaker === name) {
+                    time += activeElapsed;
+                }
+                const percentage = totalTime > 0 ? (time / totalTime) * 100 : 0;
+
+                const barItem = document.createElement('div');
+                barItem.className = 'bar-item';
+                barItem.innerHTML = `
+                    <div class="bar-label">
+                        <span class="name">${name}${currentSpeaker === name ? ' *' : ''}</span>
+                        <span class="stats">${formatTimeDetailed(time)} (${percentage.toFixed(1)}%)</span>
+                    </div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: ${percentage}%; transition: none;"></div>
+                    </div>
+                `;
+                statsBarContainer.appendChild(barItem);
+            });
+
+            let silenceTime = speakingData.silence.time;
+            if (currentSpeaker === 'silence') {
+                silenceTime += activeElapsed;
+            }
+            const silencePercentage = totalTime > 0 ? (silenceTime / totalTime) * 100 : 0;
+            const silenceBar = document.createElement('div');
+            silenceBar.className = 'bar-item';
+            silenceBar.innerHTML = `
+                <div class="bar-label">
+                    <span class="name">Silence${currentSpeaker === 'silence' ? ' *' : ''}</span>
+                    <span class="stats">${formatTimeDetailed(silenceTime)} (${silencePercentage.toFixed(1)}%)</span>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill silence" style="width: ${silencePercentage}%; transition: none;"></div>
+                </div>
+            `;
+            statsBarContainer.appendChild(silenceBar);
+
+            statsResultsBody.innerHTML = '';
+
+            participants.forEach(name => {
+                const data = speakingData[name];
+                let time = data.time;
+                if (currentSpeaker === name) {
+                    time += activeElapsed;
+                }
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${name}${currentSpeaker === name ? ' *' : ''}</td>
+                    <td class="time">${formatTimeDetailed(time)}</td>
+                    <td class="turns">${data.turns}</td>
+                `;
+                statsResultsBody.appendChild(row);
+            });
+
+            const silenceRow = document.createElement('tr');
+            silenceRow.className = 'silence-row';
+            silenceRow.innerHTML = `
+                <td>Silence${currentSpeaker === 'silence' ? ' *' : ''}</td>
+                <td class="time">${formatTimeDetailed(silenceTime)}</td>
+                <td class="turns">${speakingData.silence.turns}</td>
+            `;
+            statsResultsBody.appendChild(silenceRow);
+
+            const totalTurns = Object.values(speakingData).reduce((sum, d) => sum + d.turns, 0);
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td>Total</td>
+                <td class="time">${formatTimeDetailed(totalTime)}</td>
+                <td class="turns">${totalTurns}</td>
+            `;
+            statsResultsBody.appendChild(totalRow);
         }
 
         // Results Phase Functions
@@ -761,6 +958,8 @@
         });
         startSessionBtn.addEventListener('click', startSession);
         silenceBtn.addEventListener('click', selectSilence);
+        statsBtn.addEventListener('click', showStats);
+        backBtn.addEventListener('click', hideStats);
         endBtn.addEventListener('click', endSession);
         newSessionBtn.addEventListener('click', startNewSession);
 
