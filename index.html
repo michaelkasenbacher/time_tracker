@@ -223,7 +223,8 @@
             justify-content: center;
             text-align: center;
             padding: 8px;
-            word-break: break-word;
+            white-space: nowrap;
+            overflow: hidden;
             transform: translate(-50%, -50%);
         }
 
@@ -498,6 +499,14 @@
         const newSessionBtn = document.getElementById('newSessionBtn');
 
         // Utility functions
+        function getFontSize(name, baseSize, buttonWidth) {
+            const maxChars = Math.floor(buttonWidth / (baseSize * 0.6));
+            if (name.length <= maxChars) return baseSize;
+            const scale = maxChars / name.length;
+            const minSize = baseSize * 0.5;
+            return Math.max(minSize, baseSize * scale);
+        }
+
         function formatTime(ms) {
             const totalSeconds = Math.floor(ms / 1000);
             const minutes = Math.floor(totalSeconds / 60);
@@ -579,6 +588,8 @@
                 btn.style.left = `${x}%`;
                 btn.style.top = `${y}%`;
                 btn.dataset.name = name;
+                const fontSize = getFontSize(name, 14, 74);
+                btn.style.fontSize = `${fontSize}px`;
                 btn.onclick = () => selectSpeaker(name, btn);
                 circleContainer.appendChild(btn);
             });
