@@ -13,41 +13,40 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: #0a0a0b;
-            color: #e8e8e8;
-            line-height: 1.5;
+            background: #f5f4ef;
+            color: #3d3929;
+            line-height: 1.6;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 48px 24px;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 680px;
             margin: 0 auto;
         }
 
         h1 {
-            font-size: 1.75rem;
-            font-weight: 500;
-            color: #fff;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2d2a20;
             text-align: center;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
         }
 
         h2 {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d2a20;
             text-align: center;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
+            margin-bottom: 24px;
         }
 
         .tagline {
             text-align: center;
-            color: #6b6b6b;
-            margin-bottom: 3rem;
-            font-size: 0.95rem;
+            color: #7a7768;
+            margin-bottom: 40px;
+            font-size: 1.05rem;
         }
 
         /* Setup Phase */
@@ -59,104 +58,110 @@
 
         .input-group {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 2rem;
+            max-width: 420px;
+            margin-bottom: 28px;
         }
 
         .input-group input {
             flex: 1;
-            padding: 10px 14px;
-            border: 1px solid #2a2a2d;
-            border-radius: 8px;
-            background: #141415;
-            color: #e8e8e8;
+            padding: 14px 18px;
+            border: 1px solid #e0ded6;
+            border-radius: 12px;
+            background: #fffffe;
+            color: #3d3929;
             font-family: inherit;
-            font-size: 0.9rem;
+            font-size: 1rem;
             outline: none;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
         .input-group input:focus {
-            border-color: #5e5ce6;
-            box-shadow: 0 0 0 3px rgba(94, 92, 230, 0.15);
+            border-color: #d97757;
+            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.12);
         }
 
         .input-group input::placeholder {
-            color: #4a4a4a;
+            color: #a8a598;
         }
 
         .btn {
-            padding: 10px 18px;
+            padding: 14px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-family: inherit;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
-            background: #5e5ce6;
+            background: #d97757;
             color: #fff;
+            box-shadow: 0 1px 3px rgba(217, 119, 87, 0.3);
         }
 
         .btn-primary:hover {
-            background: #6e6ce6;
+            background: #c9654a;
+            box-shadow: 0 2px 6px rgba(217, 119, 87, 0.35);
         }
 
         .btn-secondary {
-            background: #1f1f21;
-            color: #e8e8e8;
-            border: 1px solid #2a2a2d;
+            background: #fffffe;
+            color: #3d3929;
+            border: 1px solid #e0ded6;
         }
 
         .btn-secondary:hover {
-            background: #2a2a2d;
+            background: #f9f8f4;
+            border-color: #d4d2c8;
         }
 
         .btn-end {
-            background: #1f1f21;
-            color: #e8e8e8;
-            border: 1px solid #2a2a2d;
+            background: #fffffe;
+            color: #6b6858;
+            border: 1px solid #e0ded6;
         }
 
         .btn-end:hover {
-            background: #2a2a2d;
-            border-color: #3a3a3d;
+            background: #f9f8f4;
+            border-color: #d4d2c8;
+            color: #3d3929;
         }
 
         .participants-preview {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 28px;
         }
 
         .participant-tag {
-            background: #1f1f21;
-            border: 1px solid #2a2a2d;
-            padding: 6px 12px;
-            border-radius: 6px;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            padding: 10px 16px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.875rem;
+            gap: 10px;
+            font-size: 0.95rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
         }
 
         .participant-tag .remove {
             cursor: pointer;
-            color: #6b6b6b;
-            font-size: 1rem;
+            color: #a8a598;
+            font-size: 1.1rem;
             line-height: 1;
-            transition: color 0.15s;
+            transition: color 0.2s;
         }
 
         .participant-tag .remove:hover {
-            color: #e8e8e8;
+            color: #d97757;
         }
 
         /* Tracking Phase */
@@ -168,35 +173,35 @@
 
         .current-speaker {
             text-align: center;
-            padding: 24px 32px;
-            background: linear-gradient(145deg, #141415 0%, #1a1a1c 100%);
-            border: 1px solid #2a2a2d;
-            border-radius: 12px;
+            padding: 32px 40px;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            border-radius: 20px;
             width: 100%;
-            margin-bottom: 2rem;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .current-speaker .label {
-            font-size: 0.75rem;
-            color: #6b6b6b;
+            font-size: 0.85rem;
+            color: #7a7768;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             margin-bottom: 8px;
         }
 
         .current-speaker .name {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: #fff;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #2d2a20;
             margin-bottom: 4px;
-            min-height: 2rem;
-            letter-spacing: -0.02em;
+            min-height: 2.25rem;
         }
 
         .current-speaker .timer {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 600;
-            color: #5e5ce6;
+            color: #d97757;
             font-variant-numeric: tabular-nums;
             letter-spacing: -0.02em;
         }
@@ -204,21 +209,21 @@
         .circle-container {
             position: relative;
             width: 100%;
-            max-width: 450px;
+            max-width: 460px;
             aspect-ratio: 1;
-            margin: 0 auto 2rem;
+            margin: 0 auto 32px;
         }
 
         .participant-btn {
             position: absolute;
-            width: 80px;
-            height: 80px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            border: 2px solid #2a2a2d;
-            background: #141415;
-            color: #e8e8e8;
+            border: 2px solid #e0ded6;
+            background: #fffffe;
+            color: #3d3929;
             font-family: inherit;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -226,21 +231,22 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 8px;
+            padding: 10px;
             word-break: break-word;
             transform: translate(-50%, -50%);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
         .participant-btn:hover {
-            border-color: #5e5ce6;
-            background: #1a1a1c;
+            border-color: #d97757;
+            box-shadow: 0 4px 12px rgba(217, 119, 87, 0.15);
         }
 
         .participant-btn.active {
-            border-color: #5e5ce6;
-            background: linear-gradient(145deg, #5e5ce6 0%, #4e4cd6 100%);
+            border-color: #d97757;
+            background: #d97757;
             color: #fff;
-            box-shadow: 0 0 24px rgba(94, 92, 230, 0.4);
+            box-shadow: 0 4px 16px rgba(217, 119, 87, 0.35);
         }
 
         .silence-btn {
@@ -248,29 +254,30 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90px;
-            height: 90px;
+            width: 96px;
+            height: 96px;
             border-radius: 50%;
-            border: 2px solid #2a2a2d;
-            background: #1a1a1c;
-            color: #6b6b6b;
+            border: 2px solid #d4d2c8;
+            background: #f0efe9;
+            color: #7a7768;
             font-family: inherit;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .silence-btn:hover {
-            border-color: #3a3a3d;
-            color: #e8e8e8;
+            border-color: #b8b6ab;
+            background: #e8e7e0;
+            color: #5a5848;
         }
 
         .silence-btn.active {
-            border-color: #6b6b6b;
-            background: #3a3a3d;
+            border-color: #9a9889;
+            background: #9a9889;
             color: #fff;
-            box-shadow: 0 0 20px rgba(107, 107, 107, 0.3);
+            box-shadow: 0 4px 12px rgba(154, 152, 137, 0.3);
         }
 
         /* Results Phase */
@@ -282,11 +289,12 @@
 
         .results-summary {
             width: 100%;
-            background: #141415;
-            border: 1px solid #2a2a2d;
-            border-radius: 12px;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 2rem;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .results-summary table {
@@ -296,127 +304,133 @@
 
         .results-summary th,
         .results-summary td {
-            padding: 12px 16px;
+            padding: 16px 20px;
             text-align: left;
         }
 
         .results-summary th {
             font-weight: 500;
-            color: #6b6b6b;
-            font-size: 0.75rem;
+            color: #7a7768;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid #2a2a2d;
+            letter-spacing: 0.04em;
+            background: #faf9f5;
+            border-bottom: 1px solid #e0ded6;
         }
 
         .results-summary tr:not(:last-child) td {
-            border-bottom: 1px solid #1f1f21;
+            border-bottom: 1px solid #f0efe9;
         }
 
         .results-summary .time {
             font-variant-numeric: tabular-nums;
-            color: #5e5ce6;
+            color: #d97757;
+            font-weight: 500;
         }
 
         .results-summary .turns {
-            color: #6b6b6b;
+            color: #7a7768;
         }
 
         .silence-row {
-            background: #1a1a1c;
+            background: #faf9f5;
         }
 
         .total-row {
-            background: #1f1f21;
+            background: #f5f4ef;
         }
 
         .total-row td {
-            font-weight: 500;
-            color: #fff;
+            font-weight: 600;
+            color: #2d2a20;
         }
 
         .bar-container {
             width: 100%;
-            margin-bottom: 2rem;
+            margin-bottom: 28px;
         }
 
         .bar-item {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .bar-item .bar-label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
-            font-size: 0.875rem;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
 
         .bar-item .bar-label .name {
-            color: #e8e8e8;
+            color: #3d3929;
             font-weight: 500;
         }
 
         .bar-item .bar-label .stats {
-            color: #6b6b6b;
+            color: #7a7768;
             font-variant-numeric: tabular-nums;
         }
 
         .bar-item .bar {
-            height: 8px;
-            background: #1f1f21;
-            border-radius: 4px;
+            height: 12px;
+            background: #e8e7e0;
+            border-radius: 6px;
             overflow: hidden;
         }
 
         .bar-item .bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #5e5ce6 0%, #7e7ce6 100%);
-            border-radius: 4px;
+            background: #d97757;
+            border-radius: 6px;
             transition: width 0.5s ease;
         }
 
         .bar-item .bar-fill.silence {
-            background: linear-gradient(90deg, #4a4a4a 0%, #6b6b6b 100%);
+            background: #a8a598;
         }
 
         /* Responsive */
         @media (max-width: 600px) {
             body {
-                padding: 24px 16px;
+                padding: 32px 16px;
             }
 
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
+            }
+
+            .current-speaker {
+                padding: 24px;
             }
 
             .current-speaker .name {
-                font-size: 1.25rem;
+                font-size: 1.5rem;
             }
 
             .current-speaker .timer {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .participant-btn {
-                width: 65px;
-                height: 65px;
-                font-size: 0.75rem;
-            }
-
-            .silence-btn {
-                width: 75px;
-                height: 75px;
+                width: 72px;
+                height: 72px;
                 font-size: 0.8rem;
             }
 
+            .silence-btn {
+                width: 80px;
+                height: 80px;
+                font-size: 0.85rem;
+            }
+
             .circle-container {
-                max-width: 320px;
+                max-width: 340px;
             }
 
             .results-summary th,
             .results-summary td {
-                padding: 10px 12px;
-                font-size: 0.85rem;
+                padding: 12px 14px;
+                font-size: 0.9rem;
             }
         }
 
@@ -427,13 +441,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Speaking Time</h1>
-        <p class="tagline">Track speaking time for everyone in your meeting</p>
+        <h1>Speaking Time Tracker</h1>
+        <p class="tagline">Track speaking time for everyone in your conversation</p>
 
         <!-- Setup Phase -->
         <div class="setup-phase" id="setupPhase">
             <div class="input-group">
-                <input type="text" id="nameInput" placeholder="Add participant..." maxlength="20">
+                <input type="text" id="nameInput" placeholder="Enter participant name" maxlength="20">
                 <button class="btn btn-primary" id="addNameBtn">Add</button>
             </div>
             <div class="participants-preview" id="participantsPreview"></div>
