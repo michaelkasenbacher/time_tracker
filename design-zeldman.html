@@ -731,6 +731,17 @@
             URL.revokeObjectURL(link.href);
         }
 
+        function getTimestamp() {
+            const now = new Date();
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const year = now.getFullYear();
+            const month = months[now.getMonth()];
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            return `${year}-${month}-${day}_${hours}-${minutes}`;
+        }
+
         function downloadSequence() {
             const rows = [['Participant', 'Time']];
             speakingSequence.forEach(turn => {
@@ -738,7 +749,7 @@
                 rows.push([name, formatTimeCSV(turn.duration)]);
             });
             const csvContent = rows.map(row => row.join(',')).join('\n');
-            downloadCSV('speaking-sequence.csv', csvContent);
+            downloadCSV(`speaking_sequence_${getTimestamp()}.csv`, csvContent);
         }
 
         function downloadSummary() {
@@ -762,7 +773,7 @@
             rows.push(['Total', formatTimeCSV(totalTime), totalTurns, '100.0']);
 
             const csvContent = rows.map(row => row.join(',')).join('\n');
-            downloadCSV('speaking-summary.csv', csvContent);
+            downloadCSV(`speaking_summary_${getTimestamp()}.csv`, csvContent);
         }
 
         // Setup Phase Functions
