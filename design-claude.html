@@ -774,14 +774,14 @@
             participants.forEach(name => {
                 const data = speakingData[name];
                 const percentage = totalTime > 0 ? (data.time / totalTime) * 100 : 0;
-                rows.push([name, formatTimeCSV(data.time), data.turns, percentage.toFixed(1) + '%']);
+                rows.push([name, formatTimeCSV(data.time), data.turns, percentage.toFixed(1)]);
             });
 
             const silencePercentage = totalTime > 0 ? (speakingData.silence.time / totalTime) * 100 : 0;
-            rows.push(['Silence', formatTimeCSV(speakingData.silence.time), speakingData.silence.turns, silencePercentage.toFixed(1) + '%']);
+            rows.push(['Silence', formatTimeCSV(speakingData.silence.time), speakingData.silence.turns, silencePercentage.toFixed(1)]);
 
             const totalTurns = Object.values(speakingData).reduce((sum, d) => sum + d.turns, 0);
-            rows.push(['Total', formatTimeCSV(totalTime), totalTurns, '100.0%']);
+            rows.push(['Total', formatTimeCSV(totalTime), totalTurns, '100.0']);
 
             const csvContent = rows.map(row => row.join(',')).join('\n');
             downloadCSV('speaking-summary.csv', csvContent);
