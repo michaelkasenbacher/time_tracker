@@ -290,33 +290,28 @@
 
         .results-summary {
             width: 100%;
-            background: #fffffe;
-            border: 1px solid #e0ded6;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 28px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .results-summary table {
             width: 100%;
             border-collapse: collapse;
+            margin: -4px 0;
         }
 
         .results-summary th,
         .results-summary td {
-            padding: 16px 20px;
+            padding: 12px 0;
             text-align: left;
         }
 
         .results-summary th {
             font-weight: 500;
             color: #7a7768;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            background: #faf9f5;
             border-bottom: 1px solid #e0ded6;
+            padding-bottom: 12px;
         }
 
         .results-summary tr:not(:last-child) td {
@@ -346,13 +341,36 @@
             color: #2d2a20;
         }
 
+        /* Results cards - unified styling */
+        .results-card {
+            width: 100%;
+            background: #fffffe;
+            border: 1px solid #e0ded6;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .results-card h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #7a7768;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+        }
+
         .bar-container {
             width: 100%;
-            margin-bottom: 28px;
         }
 
         .bar-item {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+        }
+
+        .bar-item:last-child {
+            margin-bottom: 0;
         }
 
         .bar-item .bar-label {
@@ -438,27 +456,10 @@
         }
 
         /* Sequence display */
-        .sequence-section {
-            width: 100%;
-            margin-bottom: 28px;
-        }
-
-        .sequence-section h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #2d2a20;
-            margin-bottom: 12px;
-        }
-
         .sequence-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            padding: 16px;
-            background: #fffffe;
-            border: 1px solid #e0ded6;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .sequence-item {
@@ -604,22 +605,28 @@
         <!-- Results Phase -->
         <div class="results-phase" id="resultsPhase">
             <h2>Session Results</h2>
-            <div class="bar-container" id="barContainer"></div>
-            <div class="sequence-section">
+            <div class="results-card">
+                <h3>Speaking Time</h3>
+                <div class="bar-container" id="barContainer"></div>
+            </div>
+            <div class="results-card">
                 <h3>Speaking Sequence</h3>
                 <div class="sequence-list" id="sequenceList"></div>
             </div>
-            <div class="results-summary">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Participant</th>
-                            <th>Time</th>
-                            <th>Turns</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultsBody"></tbody>
-                </table>
+            <div class="results-card">
+                <h3>Summary</h3>
+                <div class="results-summary">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Participant</th>
+                                <th>Time</th>
+                                <th>Turns</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
             </div>
             <button class="btn btn-primary" id="newSessionBtn">New Session</button>
         </div>

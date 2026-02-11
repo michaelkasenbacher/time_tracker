@@ -277,35 +277,51 @@
             align-items: center;
         }
 
-        .results-summary {
+        /* Results cards - unified styling */
+        .results-card {
             width: 100%;
             background: #fff;
             border: 1px solid #ddd;
-            margin-bottom: 2rem;
+            padding: 20px 24px;
+            margin-bottom: 1.5rem;
+        }
+
+        .results-card h3 {
+            font-size: 0.85rem;
+            font-weight: normal;
+            font-style: italic;
+            color: #666;
+            text-transform: lowercase;
+            margin-bottom: 16px;
+        }
+
+        .results-summary {
+            width: 100%;
         }
 
         .results-summary table {
             width: 100%;
             border-collapse: collapse;
+            margin: -4px 0;
         }
 
         .results-summary th,
         .results-summary td {
-            padding: 14px 20px;
+            padding: 12px 0;
             text-align: left;
-            border-bottom: 1px solid #eee;
         }
 
         .results-summary th {
             font-weight: normal;
             font-style: italic;
             color: #666;
-            font-size: 0.9rem;
-            border-bottom: 2px solid #ddd;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 12px;
         }
 
-        .results-summary tr:last-child td {
-            border-bottom: none;
+        .results-summary tr:not(:last-child) td {
+            border-bottom: 1px solid #eee;
         }
 
         .results-summary .time {
@@ -333,11 +349,14 @@
 
         .bar-container {
             width: 100%;
-            margin-bottom: 2.5rem;
         }
 
         .bar-item {
-            margin-bottom: 1rem;
+            margin-bottom: 14px;
+        }
+
+        .bar-item:last-child {
+            margin-bottom: 0;
         }
 
         .bar-item .bar-label {
@@ -415,26 +434,10 @@
         }
 
         /* Sequence display */
-        .sequence-section {
-            width: 100%;
-            margin-bottom: 2rem;
-        }
-
-        .sequence-section h3 {
-            font-size: 1rem;
-            font-weight: normal;
-            font-style: italic;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
         .sequence-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            padding: 16px;
-            background: #fff;
-            border: 1px solid #ddd;
         }
 
         .sequence-item {
@@ -581,22 +584,28 @@
         <!-- Results Phase -->
         <div class="results-phase" id="resultsPhase">
             <h2>Results</h2>
-            <div class="bar-container" id="barContainer"></div>
-            <div class="sequence-section">
-                <h3>Speaking Sequence</h3>
+            <div class="results-card">
+                <h3>speaking time</h3>
+                <div class="bar-container" id="barContainer"></div>
+            </div>
+            <div class="results-card">
+                <h3>speaking sequence</h3>
                 <div class="sequence-list" id="sequenceList"></div>
             </div>
-            <div class="results-summary">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Participant</th>
-                            <th>Time</th>
-                            <th>Turns</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultsBody"></tbody>
-                </table>
+            <div class="results-card">
+                <h3>summary</h3>
+                <div class="results-summary">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Participant</th>
+                                <th>Time</th>
+                                <th>Turns</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
             </div>
             <div class="divider"></div>
             <button class="btn btn-primary" id="newSessionBtn">New Session</button>
