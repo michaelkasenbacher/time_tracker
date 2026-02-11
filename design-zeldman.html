@@ -414,6 +414,61 @@
             font-variant-numeric: tabular-nums;
         }
 
+        /* Sequence display */
+        .sequence-section {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .sequence-section h3 {
+            font-size: 1rem;
+            font-weight: normal;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .sequence-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 16px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .sequence-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #f5f5f5;
+            font-size: 0.85rem;
+        }
+
+        .sequence-item .seq-name {
+            color: #222;
+        }
+
+        .sequence-item .seq-time {
+            color: #666;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sequence-item .seq-arrow {
+            color: #999;
+            margin-left: 4px;
+        }
+
+        .sequence-item.silence {
+            background: #eee;
+        }
+
+        .sequence-item.silence .seq-name {
+            font-style: italic;
+            color: #666;
+        }
+
         .divider {
             width: 60px;
             height: 1px;
@@ -527,6 +582,10 @@
         <div class="results-phase" id="resultsPhase">
             <h2>Results</h2>
             <div class="bar-container" id="barContainer"></div>
+            <div class="sequence-section">
+                <h3>Speaking Sequence</h3>
+                <div class="sequence-list" id="sequenceList"></div>
+            </div>
             <div class="results-summary">
                 <table>
                     <thead>
@@ -551,6 +610,7 @@
         let speakerStartTime = null;
         let timerInterval = null;
         let speakingData = {};
+        let speakingSequence = [];
 
         // DOM Elements
         const setupPhase = document.getElementById('setupPhase');
@@ -574,6 +634,7 @@
         const statsResultsBody = document.getElementById('statsResultsBody');
         const statsSpeakerName = document.getElementById('statsSpeakerName');
         const statsTimer = document.getElementById('statsTimer');
+        const sequenceList = document.getElementById('sequenceList');
         const newSessionBtn = document.getElementById('newSessionBtn');
 
         // Utility functions
@@ -677,6 +738,11 @@
             if (currentSpeaker !== null && speakerStartTime !== null) {
                 const elapsed = Date.now() - speakerStartTime;
                 speakingData[currentSpeaker].time += elapsed;
+                // Record the turn in the sequence
+                speakingSequence.push({
+                    speaker: currentSpeaker,
+                    duration: elapsed
+                });
             }
 
             if (name !== currentSpeaker) {
@@ -724,6 +790,11 @@
             if (currentSpeaker !== null && speakerStartTime !== null) {
                 const elapsed = Date.now() - speakerStartTime;
                 speakingData[currentSpeaker].time += elapsed;
+                // Record the final turn in the sequence
+                speakingSequence.push({
+                    speaker: currentSpeaker,
+                    duration: elapsed
+                });
             }
 
             if (timerInterval) clearInterval(timerInterval);
@@ -883,6 +954,20 @@
             `;
             barContainer.appendChild(silenceBar);
 
+            // Render speaking sequence
+            sequenceList.innerHTML = '';
+            speakingSequence.forEach((turn, index) => {
+                const item = document.createElement('span');
+                item.className = turn.speaker === 'silence' ? 'sequence-item silence' : 'sequence-item';
+                const isLast = index === speakingSequence.length - 1;
+                item.innerHTML = `
+                    <span class="seq-name">${turn.speaker === 'silence' ? 'Silence' : turn.speaker}</span>
+                    <span class="seq-time">(${formatTimeDetailed(turn.duration)})</span>
+                    ${!isLast ? '<span class="seq-arrow">→</span>' : ''}
+                `;
+                sequenceList.appendChild(item);
+            });
+
             resultsBody.innerHTML = '';
 
             participants.forEach(name => {
@@ -921,6 +1006,7 @@
             currentSpeaker = null;
             speakerStartTime = null;
             speakingData = {};
+            speakingSequence = [];
 
             if (timerInterval) clearInterval(timerInterval);
 
